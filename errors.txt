@@ -1,0 +1,10 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+File "game/gallery.rpy", line 49: 'viewport_xsize' is not a keyword argument or valid child of the frame statement.
+    viewport_xsize 800
+                  ^
+
+Ren'Py Version: Ren'Py 8.3.2.24090902
+Sun Dec  1 22:14:04 2024

@@ -12,22 +12,85 @@ screen overlay_screen():
 
         # Play button
         imagebutton:
-            idle "images/chapter_screen/button2_idle.png"
-            hover "images/chapter_screen/button2_hover.png"
-            action [Hide("overlay_screen"), SetVariable("show_overlay", False), Jump(target_label)]  # Jump to the target label
+            auto "images/chapter_screen/scene_prompt/play_button_%s.png"
+            action [Hide("overlay_screen"), SetVariable("show_overlay", False), Start(target_label)]  # Jump to the target label
             at delayed_appearance
+            hover_sound "hover.mp3"
             xpos 975
             ypos 615
 
         # Close button within the overlay screen
         imagebutton:
-            idle "images/chapter_screen/arrow.png"
-            action [Hide("overlay_screen"), SetVariable("show_overlay", False)]
+            auto "images/chapter_screen/scene_prompt/back_button_%s.png"
+            action [Hide("overlay_screen", transition=dissolve), SetVariable("show_overlay", False)]
             at delayed_appearance
+            hover_sound "hover.mp3"
             xpos 1550
             ypos 370  # Adjust position as needed
 
-# Define the delayed appearance as a transform
+screen scenelock():
+    modal True
+    add "images/prompt_screen/scene_lock.png" xalign 0.5 yalign 0.5 at chapter_lock
+    timer 0.7 action Hide("scenelock", transition=dissolve)
+
+screen chapterlock():
+    modal True
+    add "images/prompt_screen/chapter_lock.png" xalign 0.5 yalign 0.5 at chapter_lock
+    timer 0.7 action Hide("chapterlock", transition=dissolve)
+
+screen reset_confirmed():
+    modal True
+    add "images/prompt_screen/reset_confirm.png" xalign 0.5 yalign 0.5 at chapter_lock
+    timer 1.0 action Hide("reset_confirmed", transition=dissolve)
+
+screen black_screen():
+    modal True
+    add "images/prompt_screen/black_screen.png"
+    timer 0.3 action Hide("black_screen", transition=dissolve)
+
+screen confirm_prompt():
+    modal True
+    add "images/prompt_screen/confirm_prompt.png"
+
+    imagebutton:
+        xpos 826
+        ypos 580
+        auto "images/prompt_screen/yes1_%s.png"
+        hover_sound "hover.mp3"
+        action Function(layer_unlock), Show("main_menu"), Hide("gamepause", transition=dissolve), Hide("confirm_prompt")
+
+    imagebutton:
+        xpos 1046
+        ypos 580
+        hover_sound "hover.mp3"
+        auto "images/prompt_screen/no1_%s.png"
+        action Hide("confirm_prompt")
+
+screen confirm_reset():
+    modal True
+    add "images/prompt_screen/reset_prompt.png"
+
+    imagebutton:
+        xpos 826
+        ypos 580
+        auto "images/prompt_screen/yes1_%s.png"
+        hover_sound "hover.mp3"
+        action Function(reset_defaults), Hide("confirm_reset"), Show("reset_confirmed")
+
+    imagebutton:
+        xpos 1046
+        ypos 580
+        hover_sound "hover.mp3"
+        auto "images/prompt_screen/no1_%s.png"
+        action Hide("confirm_reset")
+
+
+transform chapter_lock:
+    alpha 0.0
+    linear 0.1 alpha 1.0
+    linear 0.05 alpha 0.0
+    linear 0.1 alpha 1.0
+
 transform delayed_appearance:
     alpha 0.0
     linear 0.2 alpha 0.0   # Start invisible

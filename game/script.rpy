@@ -1,43 +1,88 @@
-﻿# The script of the game goes in this file.
-
-# Declare characters used by this game. The color argument colorizes the
-# name of the character.
-
-define e = Character("Eileen")
-
+﻿define e = Character("Eileen")
+image background = ("images/chapter_screen/forest_front_t.jpg")
 
 # The game starts here.
 
 label start:
+    "what suppppp"
+    "yowwwww"
+    return
 
-    scene bg room
+label ch1_scene1:
 
-    # This shows a character sprite. A placeholder is used, but you can
-    # replace it by adding a file named "eileen happy.png" to the images
-    # directory.
+    show bg room
+    show Eileen happy
 
-    show eileen happy
+    "You are in scene1!"
+    "you will proceed to scene2 after completing this!"
 
-    # These display lines of dialogue.
-
-    e "You've created a new Ren'Py game."
-
-    e "Once you add a story, pictures, and music, you can release it to the world!"
-
-    # This ends the game.
+    $ persistent.chapter1_scene2 = True
 
     return
 
-label stageprompt:
+    call screen chapter()
 
-    show screen test_parallax_screen() with dissolve
+label ch1_scene2:
 
-    # Show a background. This uses a placeholder by default, but you can
-    # add a file (named either "bg room.png" or "bg room.jpg") to the
-    # images directory to show it.
+    show bg room
 
-    call screen test_parallax_screen()
+    show Eileen happy at left
 
-    scene bg room
+    "Scene 2!!"
+    "Finish this to proceed to Scene3"
+
+    $ persistent.chapter1_scene3 = True
 
     return
+
+
+label ch1_scene3:
+
+    show bg room
+
+    show Eileen happy at right
+
+    "Scene 2!!"
+    "Finish this to proceed to Scene3"
+
+    $ persistent.chapter2_unlock = True
+    $ persistent.chapter2_scene1 = True
+
+    return
+
+label ch2_scene1:
+
+    show bg room
+
+    "Chapter 2!!"
+    "Finish this to proceed to Scene2"
+
+    $ persistent.chapter2_scene2 = True
+
+label ch2_scene2:
+
+    show bg room
+
+    "Scene 3 of Chapter 2!!"
+    "Finish this to proceed to Chapter 3!!!"
+
+    $ persistent.chapter2_scene3 = True
+
+
+label ch2_scene3:
+
+    show bg room
+
+    "Scene 3 of Chapter 2!!"
+    "Finish this to proceed to Chapter 3!!!"
+
+    $ persistent.chapter3_unlock = True
+    $ persistent.chapter3_scene1 = True
+
+
+label ch3_scene1:
+
+    show bg room
+
+    "Chapter 2!!"
+    "Finish this to proceed to Scene2"

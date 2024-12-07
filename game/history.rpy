@@ -2,9 +2,9 @@ style vpgrid_scrollbar is vscrollbar:
     xsize 24
     ysize 617
     xalign 0.91
-    yalign 0.5
-    base_bar "images/scrollBar/Scrollbar.png"
-    thumb "images/scrollBar/ScrollBarThumb.png"
+    yalign 0.65
+    base_bar "images/scrollbar/settings_scrollbar.png"
+    thumb "images/scrollbar/ScrollBarThumb.png"
 
 screen history_screen():
 
@@ -17,19 +17,20 @@ screen history_screen():
   
     frame:
         style_prefix "history"
-        add ("images/settings_screen/history/frame.png")
-        background Transform("images/settings_screen/history/HistoryBG.png", alpha=0.7)
+        add ("images/settings_screen/history/history.png")
+        background Transform("images/settings_screen/history/HistoryBG.png", alpha=0.0)
 
         imagebutton:
-            xpos 1670 ypos 90
-            idle "images/settings_screen/history/Back_idle.png"
-            action Return(), Notify("BackButton Pressed") 
+            xpos 1670 ypos 78
+            auto "images/settings_screen/default_button/Back_%s.png"
+            action Return(), Notify("BackButton Pressed")
+            hover_sound "hover.mp3"
 
         vpgrid id "history_vpgrid":
             xsize 1450
             ysize 720
             xpos 130
-            ypos 235
+            ypos 300
             cols 1
             draggable True
             mousewheel True

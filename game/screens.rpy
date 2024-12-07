@@ -236,39 +236,55 @@ style choice_button_text is default:
 ## The quick menu is displayed in-game to provide easy access to the out-of-game
 ## menus.
 default is_skipping = False
+default is_mute = False
+
 screen quick_menu():
 
     ## Ensure this appears on top of other screens.
-    zorder 100
 
     if quick_menu:
-    
+        
         add "images/navigation_screen/navigation_bar.png" xalign 1.0
         imagebutton:
-            xpos 1220
-            ypos 20
-            idle "images/navigation_screen/history.png"
+            xpos 1818
+            ypos 26
+            auto "images/navigation_screen/pause_%s.png"
+            hover_sound "hover.mp3"
+            #activate_sound "clicked.mp3"  
+            action ShowMenu("gamepause")
+        
+        #imagebutton:
+        #    xpos 1107
+        #    ypos 25
+        #    auto "images/navigation_screen/prev_%s.png"
+        #    action Rollback()
+
+        imagebutton:
+            xpos 1282
+            ypos 25
+            auto "images/navigation_screen/history_%s.png"
+            hover_sound "hover.mp3"
+            #activate_sound "clicked.mp3"  
             action ShowMenu('history_screen')
 
         imagebutton:
-            xpos 1420
-            ypos 20
-            
-            idle ConditionSwitch("preferences.afm_enable", "images/navigation_screen/auto_playing.png", "not preferences.afm_enable", "images/navigation_screen/auto_paused.png")
+            xpos 1457
+            ypos 25         
+            idle ConditionSwitch("preferences.afm_enable", "images/navigation_screen/auto_play_idle.png", "not preferences.afm_enable", "images/navigation_screen/auto_pause_idle.png")
+            hover ConditionSwitch("preferences.afm_enable", "images/navigation_screen/auto_play_hover.png", "not preferences.afm_enable", "images/navigation_screen/auto_pause_hover.png")
             action Preference("auto-forward", "toggle")
-        
+            hover_sound "hover.mp3"
+            #activate_sound "clicked.mp3"
+             
         imagebutton:
-            xpos 1620
-            ypos 20
-            idle ConditionSwitch("is_skipping", "images/navigation_screen/skip_playing.png", "not is_skipping", "images/navigation_screen/skip_paused.png")
+            xpos 1632
+            ypos 25
+            idle ConditionSwitch("is_skipping", "images/navigation_screen/skip_play_idle.png", "not is_skipping", "images/navigation_screen/skip_pause_idle.png")
+            hover ConditionSwitch("is_skipping", "images/navigation_screen/skip_play_hover.png", "not is_skipping", "images/navigation_screen/skip_pause_hover.png")
             action ToggleVariable("is_skipping", True, False), Skip() alternate Skip(fast=True, confirm=True)
+            hover_sound "hover.mp3"
+            #activate_sound "clicked.mp3"
         
-        imagebutton:
-            xpos 1820
-            ypos 20
-            idle "images/navigation_screen/pause.png"
-            action Show('screen_setting', transition=dissolve)
-
         #hbox:
             #style_prefix "quick"
 
@@ -313,48 +329,64 @@ style quick_button_text:
 
 
 screen mnav():
-    style_prefix "navigation"
-    vbox:
-        if main_menu:
+    #style_prefix "navigation"
+    #vbox:
+    #    if main_menu:
+    #        xpos 1333
+    #        ypos 900
+
+    #    else:
+    #        xoffset 60
+
+    #    yalign 0.8
+
+    #    spacing gui.navigation_spacing
+
+    imagebutton:
+        xpos 1333
+        ypos 560
+        auto "images/main_screen/start_%s.png"
+        hover_sound "hover.mp3"
+        #activate_sound "clicked.mp3"  
+        action Show("chapter", transition=dissolve), Function(layer_lock)
+        #action Start()
+
+    imagebutton:
+        xpos 1333
+        ypos 646
+        auto "images/main_screen/load_%s.png"
+        hover_sound "hover.mp3"
+        #activate_sound "clicked.mp3"  
+        action Show("load", transition=dissolve)
+
+    imagebutton:
+        xpos 1333
+        ypos 731
+        auto "images/main_screen/settings_%s.png"
+        hover_sound "hover.mp3"
+        #activate_sound "clicked.mp3"  
+        action Show("screen_setting", transition=dissolve)
+
+    imagebutton:
+        xpos 1333
+        ypos 816
+        auto "images/main_screen/gallery_%s.png"
+        hover_sound "hover.mp3"
+        #activate_sound "clicked.mp3"  
+        action Show("album", transition=dissolve)
+                        
+
+    if renpy.variant("pc"):
+    ## The quit button is banned on iOS and unnecessary on Android and
+    ## Web.
+    
+        imagebutton:
             xpos 1333
-            ypos 900
-
-        else:
-            xoffset 60
-
-        yalign 0.8
-
-        spacing gui.navigation_spacing
-
-        if main_menu:
-
-            imagebutton:
-                auto "images/main_screen/start_%s.png"
-                action Start()
-
-            imagebutton:
-                auto "images/main_screen/load_%s.png"
-                action ShowMenu("load")
-
-            
-            imagebutton:
-                auto "images/main_screen/gallery_%s.png"
-                action ShowMenu("album")
-
-            imagebutton:
-                auto "images/main_screen/settings_%s.png"
-                action Show("screen_setting", transition=dissolve)
-            
-
-            if renpy.variant("pc"):
-
-            ## The quit button is banned on iOS and unnecessary on Android and
-            ## Web.
-            
-                imagebutton:
-                    auto "images/main_screen/quit_%s.png"
-                    action Quit("quit")
-
+            ypos 902
+            auto "images/main_screen/quit_%s.png"
+            hover_sound "hover.mp3"
+            #activate_sound "clicked.mp3"  
+            action Quit("quit")
 
 screen navigation():
 
@@ -377,7 +409,7 @@ screen navigation():
 
 
         else:
-
+            
             #textbutton _("History") action ShowMenu("history_screen")
             textbutton _("Save") action ShowMenu("save")
             textbutton _("Settings") action ShowMenu("screen_setting")
@@ -421,9 +453,9 @@ style navigation_button_text:
 ## Used to display the main menu when Ren'Py starts.
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#main-menu
+#default chapter_screen_layer = False
 
 screen main_menu():
-
     ## This ensures that any other menu screen is replaced.
     tag menu
 
@@ -435,16 +467,19 @@ screen main_menu():
 
     ## The use statement includes another screen inside this one. The actual
     ## contents of the main menu are in the navigation screen.
-    use mnav
+    if persistent.chapter_layer_unlock:
+        use chapter
+    else:
+        use mnav
 
-    if gui.show_name:
+    #if gui.show_name:
 
-        vbox:
-            style "main_menu_vbox"
+        #vbox:
+            #style "main_menu_vbox"
 
-            frame:
-                add "images/main_screen/main_title.png"
-                style "main_menu_title"
+            #frame:
+                #add "images/main_screen/main_title.png"
+                #style "main_menu_title"
 
             #text "[config.version]":
                 #style "main_menu_version"
@@ -663,108 +698,120 @@ style about_label_text:
 ## www.renpy.org/doc/html/screen_special.html#load
 
 screen save():
-
-    tag menu
+    modal True
+    #tag menu
 
     use file_slots(_("Save"))
 
 
-screen load():
+screen load(): 
+    modal True
 
-    tag menu
+    #tag menu
 
     use file_slots(_("Load"))
 
 
 screen file_slots(title):
 
+    add "images/main_screen/save_load.png"
+    imagebutton:
+            xpos 1650
+            ypos 82
+            auto "images/gallery_screen/Return_%s.png"
+            hover_sound "hover.mp3"
+            #activate_sound "clicked.mp3"  
+            #action Return()
+            action Hide("save", transition=dissolve), Hide("load", transition=dissolve)
+            #action Show("gamepause", transition=dissolve)
+
+
     default page_name_value = FilePageNameInputValue(pattern=_("Page {}"), auto=_("Automatic saves"), quick=_("Quick saves"))
 
-    use game_menu(title):
+    fixed:
 
-        fixed:
+        ## This ensures the input will get the enter event before any of the
+        ## buttons do.
+        order_reverse True
 
-            ## This ensures the input will get the enter event before any of the
-            ## buttons do.
-            order_reverse True
+        ## The page name, which can be edited by clicking on a button.
+        button:
+            style "page_label"
 
-            ## The page name, which can be edited by clicking on a button.
-            button:
-                style "page_label"
+            key_events True
+            xalign 0.5
+            yalign 0.85
+            action page_name_value.Toggle()
 
-                key_events True
+            input:
+                style "page_label_text"
+                value page_name_value
+
+        ## The grid of file slots.
+        grid gui.file_slot_cols gui.file_slot_rows:
+            style_prefix "slot"
+
+            xalign 0.5
+            yalign 0.5
+
+            spacing gui.slot_spacing
+
+            for i in range(gui.file_slot_cols * gui.file_slot_rows):
+
+                $ slot = i + 1
+
+                button:
+                    action FileAction(slot)
+
+                    has vbox
+
+                    add FileScreenshot(slot) xalign 0.5
+
+                    text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
+                        style "slot_time_text"
+
+                    text FileSaveName(slot):
+                        style "slot_name_text"
+
+                    key "save_delete" action FileDelete(slot)
+
+        ## Buttons to access other pages.
+        vbox:
+            style_prefix "page"
+
+            xalign 0.5
+            yalign 1.0
+
+            hbox:
                 xalign 0.5
-                action page_name_value.Toggle()
 
-                input:
-                    style "page_label_text"
-                    value page_name_value
+                spacing gui.page_spacing
 
-            ## The grid of file slots.
-            grid gui.file_slot_cols gui.file_slot_rows:
-                style_prefix "slot"
+                textbutton _("<") action FilePagePrevious()
+                key "save_page_prev" action FilePagePrevious()
 
-                xalign 0.5
-                yalign 0.5
+                if config.has_autosave:
+                    textbutton _("{#auto_page}A") action FilePage("auto")
 
-                spacing gui.slot_spacing
+                if config.has_quicksave:
+                    textbutton _("{#quick_page}Q") action FilePage("quick")
 
-                for i in range(gui.file_slot_cols * gui.file_slot_rows):
+                ## range(1, 10) gives the numbers from 1 to 9.
+                for page in range(1, 10):
+                    textbutton "[page]" action FilePage(page)
 
-                    $ slot = i + 1
+                textbutton _(">") action FilePageNext()
+                key "save_page_next" action FilePageNext()
 
-                    button:
-                        action FileAction(slot)
-
-                        has vbox
-
-                        add FileScreenshot(slot) xalign 0.5
-
-                        text FileTime(slot, format=_("{#file_time}%A, %B %d %Y, %H:%M"), empty=_("empty slot")):
-                            style "slot_time_text"
-
-                        text FileSaveName(slot):
-                            style "slot_name_text"
-
-                        key "save_delete" action FileDelete(slot)
-
-            ## Buttons to access other pages.
-            vbox:
-                style_prefix "page"
-
-                xalign 0.5
-                yalign 1.0
-
-                hbox:
-                    xalign 0.5
-
-                    spacing gui.page_spacing
-
-                    textbutton _("<") action FilePagePrevious()
-                    key "save_page_prev" action FilePagePrevious()
-
-                    if config.has_autosave:
-                        textbutton _("{#auto_page}A") action FilePage("auto")
-
-                    if config.has_quicksave:
-                        textbutton _("{#quick_page}Q") action FilePage("quick")
-
-                    ## range(1, 10) gives the numbers from 1 to 9.
-                    for page in range(1, 10):
-                        textbutton "[page]" action FilePage(page)
-
-                    textbutton _(">") action FilePageNext()
-                    key "save_page_next" action FilePageNext()
-
-                if config.has_sync:
-                    if CurrentScreenName() == "save":
-                        textbutton _("Upload Sync"):
-                            action UploadSync()
-                            xalign 0.5
-                    else:
-                        textbutton _("Download Sync"):
-                            action DownloadSync()
-                            xalign 0.5
+            #if config.has_sync:
+            #    if CurrentScreenName() == "save":
+            #        textbutton _("Upload Sync"):
+            #            action UploadSync()
+            #            xalign 0.5
+            #    else:
+            #        textbutton _("Download Sync"):
+            #            action DownloadSync()
+            #            xalign 0.5
 
 
 style page_label is gui_label

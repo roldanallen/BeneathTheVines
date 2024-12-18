@@ -2,9 +2,9 @@
 errors listed below, and try again.
 
 
-File "game/parallax_vp_examples.rpy", line 51: expected ':' not found.
-    else current_frame == "chapter4":
-         ^
+File "game/script.rpy", line 175: expected statement.
+    00000000000
+               ^
 
 Ren'Py Version: Ren'Py 8.3.2.24090902
-Sun Dec  8 00:35:57 2024
+Sat Dec 14 13:14:44 2024

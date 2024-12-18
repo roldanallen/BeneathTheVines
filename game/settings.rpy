@@ -183,7 +183,7 @@ init python:
         preferences.set_volume('music', 0.7)
         preferences.set_volume('voice', 0.7)
         preferences.skip_unseen = False 
-        preferences.skip_after_choices = False
+        preferences.skip_after_choices = True
         preferences.transitions = 2
         preferences.set_mute("main", False)
 

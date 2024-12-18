@@ -393,4 +393,60 @@ screen chapter():
 
                         xpos stage1.x_stage
                         ypos stage1.y_stage
+        
+                    imagebutton: #Scene3
+                        idle ConditionSwitch("persistent.chapter3_scene2", "images/chapter_screen/chapter1/scene2_idle.png", 
+                                            "not persistent.chapter3_scene2", "images/chapter_screen/chapter1/screen_locked2_idle.png")
+                        hover ConditionSwitch("persistent.chapter3_scene2", "images/chapter_screen/chapter1/scene2_hover.png", 
+                                            "not persistent.chapter3_scene2", "images/chapter_screen/chapter1/screen_locked2_idle.png")
+                        focus_mask True
+            
+                        if persistent.chapter3_scene2:
+                            action [
+                                #Notify("Button3"),
+                                AnimateScroll("parallax_vp_ex2", "horizontal increase", x_position=stage2.w_screen, y_position=stage2.h_screen, delay=0.5, warper="ease"),
+                                SetVariable("current_stage_prompt", "images/chapter_screen/stageprompt3.png"),  # Set prompt for Button1
+                                SetVariable("target_label", "ch2_scene3"),  # Set target label for Button1
+                                SetVariable("show_overlay", True),
+                                Show("overlay_screen") 
+                            ]
+                            #hover_sound "hover.mp3"
+                            activate_sound "clicked.mp3"  
+
+                        else:
+                            action [
+                                Show("scenelock"),
+                                AnimateScroll("parallax_vp_ex2", "horizontal increase", x_position=stage2.w_screen, y_position=stage2.h_screen, delay=0.5, warper="ease")]
+                            activate_sound "error.mp3"
+
+                        xpos stage2.x_stage 
+                        ypos stage2.y_stage
+        
+                    imagebutton: #Scene3
+                        idle ConditionSwitch("persistent.chapter3_scene3", "images/chapter_screen/chapter1/scene3_idle.png", 
+                                            "not persistent.chapter3_scene3", "images/chapter_screen/chapter1/screen_locked3_idle.png")
+                        hover ConditionSwitch("persistent.chapter3_scene3", "images/chapter_screen/chapter1/scene2_hover.png", 
+                                            "not persistent.chapter3_scene3", "images/chapter_screen/chapter1/screen_locked3_idle.png")
+                        focus_mask True
+            
+                        if persistent.chapter3_scene3:
+                            action [
+                                #Notify("Button3"),
+                                AnimateScroll("parallax_vp_ex2", "horizontal increase", x_position=stage3.w_screen, y_position=stage3.h_screen, delay=0.5, warper="ease"),
+                                SetVariable("current_stage_prompt", "images/chapter_screen/stageprompt3.png"),  # Set prompt for Button1
+                                SetVariable("target_label", "ch2_scene3"),  # Set target label for Button1
+                                SetVariable("show_overlay", True),
+                                Show("overlay_screen") 
+                            ]
+                            #hover_sound "hover.mp3"
+                            activate_sound "clicked.mp3"  
+
+                        else:
+                            action [
+                                Show("scenelock"),
+                                AnimateScroll("parallax_vp_ex2", "horizontal increase", x_position=stage3.w_screen, y_position=stage3.h_screen, delay=0.5, warper="ease")]
+                            activate_sound "error.mp3"
+
+                        xpos stage3.x_stage 
+                        ypos stage3.y_stage
                 

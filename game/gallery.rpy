@@ -4,8 +4,8 @@ init python:
     g.button("1")
     g.condition("persistent.blue_unlocked")
     g.transition = dissolve
-    g.image("images/gallery_screen/epitaph.jpg") 
-    #g.unlock_image("imagesnew/Gallery/image1_unlocked.png")
+    g.image("images/prologue/scene 2/Scene2.png") 
+    g.unlock_image("imagesnew/Gallery/image1_unlocked.png")
 
     g.button("2")
     g.condition("persistent.blue_unlocked")
@@ -143,7 +143,7 @@ screen album:
                 mousewheel True
                 child_size(0, 1080)
 
-                add g.make_button(name="1", unlocked = "images/gallery_screen/image_Frame.png", locked = "images/gallery_screen/image_locked.png") xpos 130 ypos 60
+                add g.make_button(name="1", unlocked = "images/prologue/scene 2/gal.png", locked = "images/gallery_screen/image_locked.png") xpos 130 ypos 60
                 add g.make_button(name="2", unlocked = "images/gallery_screen/image_Frame.png", locked = "images/gallery_screen/image_locked.png") xpos 680 ypos 60
                 add g.make_button(name="3", unlocked = "images/gallery_screen/image_Frame.png", locked = "images/gallery_screen/image_locked.png") xpos 130 ypos 420
                 add g.make_button(name="4", unlocked = "images/gallery_screen/image_Frame.png", locked = "images/gallery_screen/image_locked.png") xpos 680 ypos 420
